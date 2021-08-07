@@ -1,3 +1,4 @@
+import React from "react"
 import { html, useState, useEffect, useMemo, useRef, useContext, useLayoutEffect } from "../imports/Preact.js"
 
 import { CellOutput } from "./CellOutput.js"
@@ -149,7 +150,7 @@ export const Cell = ({
             >
                 <span></span>
             </button>
-            ${cell_api_ready ? html`<${CellOutput} ...${output} cell_id=${cell_id} />` : html``}
+            ${cell_api_ready && !is_in_app && html`<${CellOutput} ...${output} cell_id=${cell_id} />`} ${is_in_app && html`<${IsInApp} cell_id=${cell_id} />`}
             <${CellInput}
                 local_code=${cell_input_local?.code ?? code}
                 remote_code=${code}
@@ -217,4 +218,38 @@ export const Cell = ({
             </button>
         </pluto-cell>
     `
+}
+
+let IsInApp = ({ cell_id }) => {
+    let highlight_cell = React.useCallback(() => {
+        let element = document.querySelector(`#wrapper-for-${cell_id}`)
+        console.log(`#2 element, cell_id:`, element, cell_id)
+        if (element) {
+            element.style.filter = `sepia() hue-rotate(242deg) saturate(10)`
+        }
+    }, [cell_id])
+    let unhighlight_cell = React.useCallback(() => {
+        let element = document.querySelector(`#wrapper-for-${cell_id}`)
+        console.log(`#1 element, cell_id:`, element, cell_id)
+        if (element) {
+            element.style.filter = ``
+        }
+    }, [cell_id])
+
+    React.useLayoutEffect(() => {
+        return () => unhighlight_cell()
+    }, [unhighlight_cell])
+
+    return html`<div
+        style=${{ padding: 8, opacity: 0.4 }}
+        onMouseEnter=${() => {
+            highlight_cell()
+        }}
+        onMouseLeave=${() => {
+            unhighlight_cell()
+        }}
+    >
+        Is currently being rendered<br />
+        in the app
+    </div>`
 }

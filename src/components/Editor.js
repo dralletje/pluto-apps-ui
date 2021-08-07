@@ -29,6 +29,7 @@ import { start_binder, BinderPhase } from "../common/Binder.js"
 import { read_Uint8Array_with_progress, FetchProgress } from "./FetchProgress.js"
 // import { BinderButton } from "./BinderButton.js"
 import { slider_server_actions, nothing_actions } from "../common/SliderServerClient.js"
+import { CellOutput } from "./CellOutput.js"
 
 const default_path = "..."
 const DEBUG_DIFFING = false
@@ -224,6 +225,7 @@ export class Editor extends Component {
             selected_cells: [],
 
             update_is_ongoing: false,
+            is_app_editor_open: true,
         }
 
         this.setStatePromise = (fn) => new Promise((r) => this.setState(fn, () => r(null)))
@@ -1103,7 +1105,14 @@ patch: ${JSON.stringify(
                     minHeight: "100vh",
                     minWidth: "100vw",
                 }}>
-                    <div className="sidebar" style=${{ width: 300 }}>
+                    <div style=${{
+                        width: this.state.is_app_editor_open ? 300 : 0,
+                        overflow: "hidden",
+                        transition: "width .5s",
+                        position: "relative",
+                        overflowY: "auto",
+                    }}>
+                    <div className="sidebar" style=${{ width: 300, position: "absolute", top: 0, bttom: 0, right: 0, borderRight: "solid 4px #eee" }}>
                         <${Scroller} active=${this.state.scroller} />
                         <header>
                             <nav id="at_the_top">
@@ -1195,11 +1204,27 @@ patch: ${JSON.stringify(
                         />
                         <${SlideControls} />
                     </div>
+                    </div>
 
-                    <div style=${{ minWidth: 16 }} />
+                    <div style=${{ flex: 1, backgroundColor: "white", position: "relative" }}>
+                        <div style=${{ padding: 16, backgroundColor: "red" }}>
+                            <button
+                                onClick=${() => {
+                                    this.setState({ is_app_editor_open: !this.state.is_app_editor_open })
+                                }}
+                            >Toggle sidebar</button>
 
-                    <div style=${{ flex: 1, backgroundColor: "#eee" }}>
-                        <div>Hey</div>
+                        </div>
+
+                        <div style=${{ margin: 16, marginTop: 40 }}>
+                            ${notebook.cell_order.map((cell_id) =>
+                                notebook.cell_results[cell_id] && notebook.cell_inputs[cell_id].is_in_app
+                                    ? html`<div style=${{ marginTop: 16 }}>
+                                          <${AppCell} key=${cell_id} cell_id=${cell_id} result=${notebook.cell_results[cell_id]} />
+                                      </div>`
+                                    : html`<div />`
+                            )}
+                        </div>
                     </div>
                 </div>
                 </${PlutoJSInitializingContext.Provider}>
@@ -1207,6 +1232,12 @@ patch: ${JSON.stringify(
             </${PlutoContext.Provider}>
         `
     }
+}
+
+let AppCell = ({ result, cell_id }) => {
+    return html`<div id="wrapper-for-${cell_id}">
+        <${CellOutput} ...${result.output} cell_id=${cell_id} />
+    </div>`
 }
 
 /* LOCALSTORAGE NOTEBOOKS LIST */
