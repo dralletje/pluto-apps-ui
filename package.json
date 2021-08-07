@@ -1,0 +1,46 @@
+{
+  "name": "pluto-pro",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@observablehq/stdlib": "^3.9.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "ansi_up": "^5.0.1",
+    "codemirror": "^5.62.2",
+    "htm": "^3.1.0",
+    "immer": "^9.0.5",
+    "lodash": "^4.17.21",
+    "msgpack-lite": "^0.1.26",
+    "preact": "^10.5.14",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "web-vitals": "^1.1.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
