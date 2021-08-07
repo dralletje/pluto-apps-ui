@@ -7,7 +7,7 @@ const StackFrameFilename = ({ frame, cell_id }) => {
         const frame_cell_id = frame.file.substr(sep_index + 4)
         const a = html`<a
             href="#"
-            onclick=${(e) => {
+            onClick=${(e) => {
                 window.dispatchEvent(
                     new CustomEvent("cell_focus", {
                         detail: {
@@ -114,7 +114,7 @@ export const ErrorMessage = ({ msg, stacktrace, cell_id }) => {
 
                 return html`<p>
                     Multiple definitions for ${" "}
-                    <a href="#" onclick=${onclick}>${what}</a>
+                    <a href="#" onClick=${onclick}>${what}</a>
                 </p>`
             },
         },

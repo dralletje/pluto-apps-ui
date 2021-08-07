@@ -41,7 +41,7 @@ const More = ({ on_click_more }) => {
 
     return html`<pluto-tree-more
         class=${loading ? "loading" : ""}
-        onclick=${(e) => {
+        onClick=${(e) => {
             if (!loading) {
                 if (on_click_more() !== false) {
                     set_loading(true)
@@ -122,7 +122,7 @@ export const TreeView = ({ mime, body, cell_id, persist_js_state }) => {
             break
     }
 
-    return html`<pluto-tree className="collapsed ${body.type}" onclick=${onclick} ref=${node_ref}>${inner}</pluto-tree>`
+    return html`<pluto-tree className="collapsed ${body.type}" onClick=${onclick} ref=${node_ref}>${inner}</pluto-tree>`
 }
 
 export const TableView = ({ mime, body, cell_id, persist_js_state }) => {
