@@ -1320,7 +1320,7 @@ pluto-cell > button.add_cell > span::after {
 }
 pluto-input > button.delete_cell ul.input_context_menu {
     --width: 156px;
-    left: 100%;
+    right: 100%;
     top: -8px;
     margin: 0;
     padding: 0px;
@@ -1333,7 +1333,7 @@ pluto-input > button.delete_cell ul.input_context_menu {
 @media screen and (min-width: 921px) {
 
     pluto-input > button.delete_cell ul.input_context_menu {
-        left: calc(100% - 3px);
+        right: calc(100% - 3px);
     }
 }
 @media screen and (max-width: 920px) {
@@ -1341,7 +1341,7 @@ pluto-input > button.delete_cell ul.input_context_menu {
         z-index: 31;
     }
     pluto-input > button.delete_cell ul.input_context_menu {
-        left: calc(100% - var(--width) - 36px);
+        right: calc(100% - var(--width) - 36px);
     }
 }
 .input_context_menu li {

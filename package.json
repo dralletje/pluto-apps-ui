@@ -16,7 +16,11 @@
     "preact": "^10.5.14",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-grid-layout": "^1.2.5",
+    "react-resizable": "^3.0.4",
     "react-scripts": "4.0.3",
+    "react-use-measure": "^2.0.4",
+    "styled-components": "^5.3.0",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

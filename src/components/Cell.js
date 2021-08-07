@@ -223,16 +223,14 @@ export const Cell = ({
 let IsInApp = ({ cell_id }) => {
     let highlight_cell = React.useCallback(() => {
         let element = document.querySelector(`#wrapper-for-${cell_id}`)
-        console.log(`#2 element, cell_id:`, element, cell_id)
         if (element) {
-            element.style.filter = `sepia() hue-rotate(242deg) saturate(10)`
+            element.classList.add("highlighted")
         }
     }, [cell_id])
     let unhighlight_cell = React.useCallback(() => {
         let element = document.querySelector(`#wrapper-for-${cell_id}`)
-        console.log(`#1 element, cell_id:`, element, cell_id)
         if (element) {
-            element.style.filter = ``
+            element.classList.remove("highlighted")
         }
     }, [cell_id])
 
