@@ -126,7 +126,7 @@ export const ErrorMessage = ({ msg, stacktrace, cell_id }) => {
 
     const matched_rewriter = rewriters.find(({ pattern }) => pattern.test(msg))
 
-    return html`<jlerror>
+    return html`<pluto-jlerror>
         <header>${matched_rewriter.display(msg)}</header>
         ${stacktrace.length == 0
             ? null
@@ -143,5 +143,5 @@ export const ErrorMessage = ({ msg, stacktrace, cell_id }) => {
                       )}
                   </ol>
               </section>`}
-    </jlerror>`
+    </pluto-jlerror>`
 }

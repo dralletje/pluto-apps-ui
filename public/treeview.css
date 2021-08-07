@@ -238,34 +238,34 @@ pluto-tree p-r pre {
 
 /*  */
 
-jlerror {
+pluto-jlerror {
     font-size: 0.75rem;
     font-family: "Roboto Mono", monospace;
 }
 
-jlerror > header {
+pluto-jlerror > header {
     color: #330000;
 }
-jlerror > header > p {
+pluto-jlerror > header > p {
     margin-block-end: 0.2em;
 }
-jlerror > header > p:first-child {
+pluto-jlerror > header > p:first-child {
     font-weight: bold;
 }
-jlerror > section > ol > li > mark {
+pluto-jlerror > section > ol > li > mark {
     background: #f3f2f1;
     border-radius: 6px;
     font-family: JuliaMono, monospace;
     font-variant-ligatures: none;
 }
-jlerror > section > ol > li > em > a {
+pluto-jlerror > section > ol > li > em > a {
     background: #f5efd9;
     border-radius: 4px;
     padding: 1px 7px;
     text-decoration: none;
     border-left: 3px solid #9a7575;
 }
-jlerror > section > ol > li > span {
+pluto-jlerror > section > ol > li > span {
     opacity: 0.8;
     padding: 0px 1em;
 }
