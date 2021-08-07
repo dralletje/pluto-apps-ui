@@ -26,7 +26,7 @@ const SimpleOutputBody = ({ mime, body, cell_id, persist_js_state }) => {
             return html`<${TreeView} cell_id=${cell_id} body=${body} persist_js_state=${persist_js_state} />`
             break
         case "application/vnd.pluto.table+object":
-            return html` <${TableView} cell_id=${cell_id} body=${body} persist_js_state=${persist_js_state} />`
+            return html`<${TableView} cell_id=${cell_id} body=${body} persist_js_state=${persist_js_state} />`
             break
         case "text/plain":
             return html`<pre className="no-block">${body}</pre>`
@@ -81,7 +81,7 @@ export const TreeView = ({ mime, body, cell_id, persist_js_state }) => {
     }
 
     const mimepair_output = (pair) => html`<${SimpleOutputBody} cell_id=${cell_id} mime=${pair[1]} body=${pair[0]} persist_js_state=${persist_js_state} />`
-    const more = html`<p-r><${More} on_click_more=${on_click_more} /></p-r>`
+    const more = html`<p-r key="more"><${More} on_click_more=${on_click_more} /></p-r>`
 
     var inner = null
     switch (body.type) {
@@ -95,34 +95,36 @@ export const TreeView = ({ mime, body, cell_id, persist_js_state }) => {
         case "Array":
         case "Set":
         case "Tuple":
-            inner = html`${prefix(body)}<pluto-tree-items className=${body.type}
-                    >${body.elements.map((r) =>
-                        r === "more" ? more : html`<p-r>${body.type === "Set" ? "" : html`<p-k>${r[0]}</p-k>`}<p-v>${mimepair_output(r[1])}</p-v></p-r>`
+            inner = html`${prefix(body)}<pluto-tree-items class=${body.type}
+                    >${body.elements.map((r, i) =>
+                        r === "more"
+                            ? more
+                            : html`<p-r key=${i}>${body.type === "Set" ? "" : html`<p-k>${r[0]}</p-k>`}<p-v>${mimepair_output(r[1])}</p-v></p-r>`
                     )}</pluto-tree-items
                 >`
             break
         case "Dict":
             inner = html`${prefix(body)}<pluto-tree-items class=${body.type}
-                    >${body.elements.map((r) =>
-                        r === "more" ? more : html`<p-r><p-k>${mimepair_output(r[0])}</p-k><p-v>${mimepair_output(r[1])}</p-v></p-r>`
+                    >${body.elements.map((r, i) =>
+                        r === "more" ? more : html`<p-r key=${i}><p-k>${mimepair_output(r[0])}</p-k><p-v>${mimepair_output(r[1])}</p-v></p-r>`
                     )}</pluto-tree-items
                 >`
             break
         case "NamedTuple":
             inner = html`${prefix(body)}<pluto-tree-items class=${body.type}
-                    >${body.elements.map((r) =>
-                        r === "more" ? more : html`<p-r><p-k>${r[0]}</p-k><p-v>${mimepair_output(r[1])}</p-v></p-r>`
+                    >${body.elements.map((r, i) =>
+                        r === "more" ? more : html`<p-r key=${i}><p-k>${r[0]}</p-k><p-v>${mimepair_output(r[1])}</p-v></p-r>`
                     )}</pluto-tree-items
                 >`
             break
         case "struct":
             inner = html`${prefix(body)}<pluto-tree-items class=${body.type}
-                    >${body.elements.map((r) => html`<p-r><p-k>${r[0]}</p-k><p-v>${mimepair_output(r[1])}</p-v></p-r>`)}</pluto-tree-items
+                    >${body.elements.map((r, i) => html`<p-r key=${i}><p-k>${r[0]}</p-k><p-v>${mimepair_output(r[1])}</p-v></p-r>`)}</pluto-tree-items
                 >`
             break
     }
 
-    return html`<pluto-tree className="collapsed ${body.type}" onClick=${onclick} ref=${node_ref}>${inner}</pluto-tree>`
+    return html`<pluto-tree class="collapsed ${body.type}" onClick=${onclick} ref=${node_ref}>${inner}</pluto-tree>`
 }
 
 export const TableView = ({ mime, body, cell_id, persist_js_state }) => {
@@ -142,20 +144,20 @@ export const TableView = ({ mime, body, cell_id, persist_js_state }) => {
             ? null
             : html`<thead>
                   <tr className="schema-names">
-                      ${["", ...body.schema.names].map((x) => html`<th>${x === "more" ? more(2) : x}</th>`)}
+                      ${["", ...body.schema.names].map((x, i) => html`<th key=${i}>${x === "more" ? more(2) : x}</th>`)}
                   </tr>
                   <tr className="schema-types">
-                      ${["", ...body.schema.types].map((x) => html`<th>${x === "more" ? null : x}</th>`)}
+                      ${["", ...body.schema.types].map((x, i) => html`<th key=${i}>${x === "more" ? null : x}</th>`)}
                   </tr>
               </thead>`
     const tbody = html`<tbody>
         ${body.rows.map(
-            (row) =>
-                html`<tr>
+            (row, i) =>
+                html`<tr key=${i}>
                     ${row === "more"
                         ? html`<td className="pluto-tree-more-td" colspan="999">${more(1)}</td>`
-                        : html`<th>${row[0]}</th>
-                              ${row[1].map((x) => html`<td>${x === "more" ? null : mimepair_output(x)}</td>`)}`}
+                        : html`<th key="first">${row[0]}</th>
+                              ${row[1].map((x, i) => html`<td key=${i}>${x === "more" ? null : mimepair_output(x)}</td>`)}`}
                 </tr>`
         )}
     </tbody>`

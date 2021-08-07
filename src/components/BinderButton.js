@@ -34,7 +34,7 @@ export const BinderButton = ({ binder_phase, start_binder, notebookfile }) => {
     if (!show) return null
     const show_binder = binder_phase != null
     const recommend_download = notebookfile_ref.current.startsWith("data:")
-    return html` <div id="launch_binder">
+    return html`<div id="launch_binder">
         <span
             id="binder_launch_help"
             onClick=${(e) => {

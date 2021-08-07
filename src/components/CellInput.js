@@ -724,7 +724,7 @@ const InputContextMenu = ({ on_delete, cell_id, run_cell, running_disabled, is_i
         await run_cell()
     }
 
-    return html` <button onMouseLeave=${mouseleave} onClick=${() => setOpen(!open)} onBlur=${() => setOpen(false)} className="delete_cell" title="Actions">
+    return html`<button onMouseLeave=${mouseleave} onClick=${() => setOpen(!open)} onBlur=${() => setOpen(false)} className="delete_cell" title="Actions">
         <span className="icon"></span>
         ${open
             ? html`<ul onMouseEnter=${mouseenter} className="input_context_menu">

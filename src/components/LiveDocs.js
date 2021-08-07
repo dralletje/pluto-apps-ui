@@ -87,7 +87,7 @@ export let LiveDocs = ({ desired_doc_query, on_update_doc_query, notebook }) => 
         })
     }
 
-    let docs_element = useMemo(() => html` <${RawHTMLContainer} body=${state.body} /> `, [state.body])
+    let docs_element = useMemo(() => html`<${RawHTMLContainer} body=${state.body} /> `, [state.body])
     let no_docs_found = state.loading === false && state.searched_query !== "" && state.searched_query !== state.shown_query
 
     return html`
