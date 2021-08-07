@@ -70,7 +70,7 @@ export class CellOutput extends Component {
                 })}
                 mime=${this.props.mime}
             >
-                <assignee>${this.props.rootassignee}</assignee>
+                <pluto-assignee>${this.props.rootassignee}</pluto-assignee>
                 ${this.state.error ? html`<div>${this.state.error.message}</div>` : html`<${OutputBody} ...${this.props} />`}
             </pluto-output>
         `

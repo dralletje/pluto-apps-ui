@@ -855,18 +855,18 @@ pluto-output:not(.rich_output) {
     padding-bottom: 3px;
 }
 
-pluto-output > assignee {
+pluto-output > pluto-assignee {
     font-family: JuliaMono, monospace;
     font-size: 0.75rem;
     font-variant-ligatures: none;
 }
 
-pluto-output > assignee::after {
+pluto-output > pluto-assignee::after {
     content: "\a0=\a0";
     opacity: 0.6;
 }
 
-pluto-output > assignee:empty {
+pluto-output > pluto-assignee:empty {
     display: none;
 }
 
@@ -2186,7 +2186,7 @@ li.CodeMirror-hint.c_String::before,
 }
 
 li.CodeMirror-hint.c_Any::before,
-pluto-output > assignee,
+pluto-output > pluto-assignee,
 .cm-s-default span.cm-variable {
     color: #5668a4;
     font-weight: 700;
