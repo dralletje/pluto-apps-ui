@@ -110,7 +110,7 @@ export class DropRuler extends Component {
                   top: this.cell_edges[this.state.drop_index] + "px",
               }
             : {}
-        return html`<dropruler style=${styles}></dropruler>`
+        return html`<pluto-dropruler style=${styles}></pluto-dropruler>`
     }
 }
 

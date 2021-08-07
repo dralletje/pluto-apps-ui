@@ -1703,7 +1703,7 @@ pluto-cell.code_differs > pluto-runarea > button {
 
 /* DRAG DROP */
 
-dropruler {
+pluto-dropruler {
     position: absolute;
     display: none;
     left: 0px;
