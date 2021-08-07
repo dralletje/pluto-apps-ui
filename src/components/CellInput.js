@@ -714,7 +714,11 @@ const InputContextMenu = ({ on_delete, cell_id, run_cell, running_disabled, is_i
         e.preventDefault()
         e.stopPropagation()
         await pluto_actions.update_notebook((notebook) => {
-            notebook.cell_inputs[cell_id].is_in_app = new_val
+            if (new_val) {
+                notebook.app_cells[cell_id] = notebook.app_cells[cell_id] ?? {}
+            } else {
+                delete notebook.app_cells[cell_id]
+            }
         })
         // we also 'run' the cell if it is disabled, this will make the backend propage the disabled state to dependent cells
         await run_cell()

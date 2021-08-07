@@ -7,10 +7,13 @@ import GridLayout from "react-grid-layout"
 import { CellOutput } from "./CellOutput"
 import styled from "styled-components"
 import useMeasure from "react-use-measure"
+import { cl } from "../common/ClassTable"
+import { PlutoContext } from "../common/PlutoContext"
 
 /** @type {import("styled-components").StyledComponent<"div", null, { is_app_editor_open: boolean }>} */
 let CellStyle = styled.div`
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     background-color: white;
     box-shadow: ${(p) => (p.is_app_editor_open ? "0px 0px 0px 4px #eee" : "none")};
 
@@ -41,12 +44,19 @@ let CellStyle = styled.div`
     }
 `
 
-export let AppGrid = ({ is_app_editor_open, on_is_app_editor_open_change, notebook }) => {
+/**
+ * @param {object} props
+ * @param {import("./Editor").NotebookData} props.notebook
+ * @param {boolean} props.is_app_editor_open
+ * @param {any} props.on_is_app_editor_open_change
+ */
+export let AppGrid = ({ notebook, is_app_editor_open, on_is_app_editor_open_change }) => {
     const [ref, bounds] = useMeasure()
+    let pluto_actions = React.useContext(PlutoContext)
 
     return (
-        <div ref={ref} style={{ flex: 1, backgroundColor: "white" }}>
-            <div style={{ padding: 16, backgroundColor: "#eee" }}>
+        <div ref={ref} style={{ flex: 1, backgroundColor: "white", height: "100vh", overflowY: "auto" }}>
+            <div style={{ padding: 16, backgroundColor: "#eee", position: "sticky", top: 0, zIndex: 10 }}>
                 <button onClick={() => on_is_app_editor_open_change(!is_app_editor_open)}>Toggle sidebar</button>
             </div>
 
@@ -55,7 +65,18 @@ export let AppGrid = ({ is_app_editor_open, on_is_app_editor_open_change, notebo
                     className="layout"
                     // layout={layout}
                     style={{ padding: 8 }}
-                    onLayoutChange={() => {}}
+                    onLayoutChange={(new_layout) => {
+                        console.log(`new_layout:`, new_layout)
+                        pluto_actions.update_notebook((notebook) => {
+                            for (let cell_layout of new_layout) {
+                                let app_cell = notebook.app_cells[cell_layout.i]
+                                app_cell.x = cell_layout.x
+                                app_cell.y = cell_layout.y
+                                app_cell.w = cell_layout.w
+                                app_cell.h = cell_layout.h
+                            }
+                        })
+                    }}
                     cols={6}
                     rowHeight={50}
                     width={bounds.width}
@@ -64,9 +85,17 @@ export let AppGrid = ({ is_app_editor_open, on_is_app_editor_open_change, notebo
                     isResizable={is_app_editor_open}
                 >
                     {notebook.cell_order
-                        .filter((cell_id) => notebook.cell_inputs[cell_id].is_in_app)
+                        .filter((cell_id) => notebook.app_cells[cell_id] != null)
                         .map((cell_id) => (
-                            <CellStyle key={cell_id} id={`wrapper-for-${cell_id}`} is_app_editor_open={is_app_editor_open}>
+                            <CellStyle
+                                key={cell_id}
+                                className="pluto-app-cell"
+                                id={`wrapper-for-${cell_id}`}
+                                is_app_editor_open={is_app_editor_open}
+                                data-grid={position_or_bust(notebook.app_cells[cell_id])}
+                                data-pluto-is-running={notebook.cell_results[cell_id].running}
+                                data-pluto-is-queued={notebook.cell_results[cell_id].queued}
+                            >
                                 <div className="app-output-container">
                                     <AppCell key={cell_id} cell_id={cell_id} result={notebook.cell_results[cell_id]} />
                                 </div>
@@ -74,8 +103,18 @@ export let AppGrid = ({ is_app_editor_open, on_is_app_editor_open_change, notebo
                         ))}
                 </GridLayout>
             )}
+
+            <div style={{ minHeight: 200 }} />
         </div>
     )
+}
+
+let position_or_bust = (app_cell) => {
+    if (app_cell.x != null && app_cell.y != null && app_cell.w != null && app_cell.h != null) {
+        return app_cell
+    } else {
+        return undefined
+    }
 }
 
 let AppCell = ({ result, cell_id }) => {

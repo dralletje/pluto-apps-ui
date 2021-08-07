@@ -141,6 +141,11 @@ const first_true_key = (obj) => {
  */
 
 /**
+ * @typedef AppCellData
+ * @type {any}
+ */
+
+/**
  * @typedef NotebookData
  * @type {{
  *  notebook_id: string,
@@ -155,6 +160,7 @@ const first_true_key = (obj) => {
  *  cell_execution_order: Array<string>,
  *  bonds: { [name: string]: any },
  *  nbpkg: Object,
+ *  app_cells: { [uuid: string]: AppCellData }
  * }}
  */
 
@@ -178,6 +184,7 @@ const initial_notebook = () => ({
     cell_execution_order: [],
     bonds: {},
     nbpkg: null,
+    app_cells: {},
 })
 
 export class Editor extends Component {

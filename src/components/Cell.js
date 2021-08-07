@@ -13,6 +13,7 @@ import { PlutoContext } from "../common/PlutoContext.js"
  *  cell_result: import("./Editor.js").CellResultData,
  *  cell_input: import("./Editor.js").CellInputData,
  *  cell_input_local: import("./Editor.js").CellInputData,
+ *  app_cell: import("./Editor.js").AppCellData,
  *  selected: boolean,
  *  selected_cells: Array<string>,
  *  force_hide_input: boolean,
@@ -21,8 +22,9 @@ import { PlutoContext } from "../common/PlutoContext.js"
  * }} props
  * */
 export const Cell = ({
-    cell_input: { cell_id, code, code_folded: _code_folded, running_disabled, is_in_app },
+    cell_input: { cell_id, code, code_folded, running_disabled },
     cell_result: { queued, running, runtime, errored, output, published_objects, depends_on_disabled_cells },
+    app_cell,
     cell_dependencies: { downstream_cells_map, upstream_cells_map, precedence_heuristic },
     cell_input_local,
     notebook_id,
@@ -37,8 +39,6 @@ export const Cell = ({
     disable_input,
     nbpkg,
 }) => {
-    let code_folded = false
-
     let pluto_actions = useContext(PlutoContext)
     const notebook = pluto_actions.get_notebook()
     const variables = Object.keys(notebook?.cell_dependencies?.[cell_id]?.downstream_cells_map || {})
@@ -99,6 +99,8 @@ export const Cell = ({
 
         set_cell_api_ready(true)
     })
+
+    let is_in_app = app_cell != null
 
     return html`
         <pluto-cell

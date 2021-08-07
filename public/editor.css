@@ -1320,7 +1320,7 @@ pluto-cell > button.add_cell > span::after {
 }
 pluto-input > button.delete_cell ul.input_context_menu {
     --width: 156px;
-    right: 100%;
+    right: 0px;
     top: -8px;
     margin: 0;
     padding: 0px;

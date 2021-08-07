@@ -8,6 +8,7 @@ let CellMemo = ({
     cell_result,
     cell_input,
     cell_input_local,
+    app_cell,
     notebook_id,
     on_update_doc_query,
     on_cell_input,
@@ -31,6 +32,7 @@ let CellMemo = ({
                 cell_result=${cell_result}
                 cell_dependencies=${cell_dependencies}
                 cell_input=${cell_input}
+                app_cell=${app_cell}
                 cell_input_local=${cell_input_local}
                 notebook_id=${notebook_id}
                 on_update_doc_query=${on_update_doc_query}
@@ -46,6 +48,7 @@ let CellMemo = ({
             />
         `
     }, [
+        app_cell,
         cell_id,
         running_disabled,
         depends_on_disabled_cells,
@@ -162,6 +165,7 @@ export const Notebook = ({
                         cell_input=${notebook.cell_inputs[cell_id]}
                         cell_dependencies=${notebook.cell_dependencies[cell_id] ?? {}}
                         cell_input_local=${cell_inputs_local[cell_id]}
+                        app_cell=${notebook.app_cells[cell_id]}
                         notebook_id=${notebook.notebook_id}
                         on_update_doc_query=${on_update_doc_query}
                         on_cell_input=${on_cell_input}
