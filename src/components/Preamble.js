@@ -26,7 +26,7 @@ export const Preamble = ({ any_code_differs, last_update_time }) => {
         return () => clearTimeout(timeout_ref?.current)
     }, [any_code_differs])
 
-    return html`<preamble>
+    return html`<pluto-preamble>
         ${state === "ask_to_save"
             ? html`
                   <div id="saveall-container" className=${state}>
@@ -53,5 +53,5 @@ export const Preamble = ({ any_code_differs, last_update_time }) => {
                   </div>
               `
             : null}
-    </preamble>`
+    </pluto-preamble>`
 }

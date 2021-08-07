@@ -735,7 +735,7 @@ body.binder.loading loading-bar {
 
 /* PREAMBLE */
 
-main > preamble {
+main > pluto-preamble {
     display: flex;
     height: 20px;
     position: sticky;
@@ -746,7 +746,7 @@ main > preamble {
     pointer-events: none;
 }
 
-main > preamble #saveall-container {
+main > pluto-preamble #saveall-container {
     margin-left: auto;
     pointer-events: all;
     /* right: min(0px, 700px + 25px - 100vw); */
@@ -761,23 +761,23 @@ main > preamble #saveall-container {
 }
 
 @media screen and (min-width: calc(700px + 25px + 6px + 500px)) {
-    main > preamble #saveall-container {
+    main > pluto-preamble #saveall-container {
         right: -500px;
     }
 }
 
-main > preamble #saveall-container.saving,
-main > preamble #saveall-container.saved {
+main > pluto-preamble #saveall-container.saving,
+main > pluto-preamble #saveall-container.saved {
     border-color: transparent;
 }
 
-main > preamble #saveall-container.saving > span,
-main > preamble #saveall-container.saved > span {
+main > pluto-preamble #saveall-container.saving > span,
+main > pluto-preamble #saveall-container.saved > span {
     opacity: 0.5;
 }
 
-main > preamble span.saved-icon::after,
-main > preamble span.saving-icon::after {
+main > pluto-preamble span.saved-icon::after,
+main > pluto-preamble span.saving-icon::after {
     content: "";
     display: inline-block;
     padding-right: 20px;
@@ -791,10 +791,10 @@ main > preamble span.saving-icon::after {
     background-position-y: 1px;
 }
 
-main > preamble span.saved-icon::after {
+main > pluto-preamble span.saved-icon::after {
     background-image: url(https://cdn.jsdelivr.net/gh/ionic-team/ionicons@5.5.1/src/svg/checkmark-outline.svg);
 }
-main > preamble button {
+main > pluto-preamble button {
     position: relative;
 }
 
@@ -805,7 +805,7 @@ main > preamble button {
     display: inline;
 }
 
-/* body:not(.code_differs) > main > preamble #saveall-container {
+/* body:not(.code_differs) > main > pluto-preamble #saveall-container {
     display: none;
 } */
 
@@ -977,7 +977,7 @@ pluto-cell.running_disabled > pluto-input .CodeMirror {
 
 /* UI */
 
-preamble button,
+pluto-preamble button,
 pluto-cell > button,
 pluto-input > button,
 pluto-runarea > button,
@@ -1248,7 +1248,7 @@ pluto-input > button > span {
         transition: opacity 0.25s ease-in-out;
     }
     button.toggle_export:hover,
-    preamble button:hover,
+    pluto-preamble button:hover,
     pluto-cell > button:hover,
     pluto-cell > pluto-input > button:hover,
     pluto-cell > pluto-runarea > button:hover,

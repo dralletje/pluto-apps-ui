@@ -47,7 +47,7 @@ export const SelectionArea = ({ on_selection, set_scroller, cell_order }) => {
             // @ts-ignore
             const t = e.target.tagName
             // TODO: also allow starting the selection in one codemirror and stretching it to another cell
-            if (e.button === 0 && (t === "BODY" || t === "MAIN" || t === "PLUTO-NOTEBOOK" || t === "PREAMBLE")) {
+            if (e.button === 0 && (t === "BODY" || t === "MAIN" || t === "PLUTO-NOTEBOOK" || t === "PLUTO-PREAMBLE")) {
                 on_selection([])
                 set_selection_start({ x: e.pageX, y: e.pageY })
                 set_selection_end({ x: e.pageX, y: e.pageY })

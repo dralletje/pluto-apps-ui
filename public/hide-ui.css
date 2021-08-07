@@ -4,7 +4,7 @@ main {
 }
 
 body > header,
-preamble > button,
+pluto-preamble > button,
 pluto-cell > button,
 pluto-input > button,
 pluto-shoulder,
